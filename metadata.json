@@ -1,0 +1,6 @@
+{
+  "name": "Fiestas Patrias JJC",
+  "description": "Aplicación móvil para el registro y validación del recorrido de estaciones de Fiestas Patrias en JJC S.A.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
