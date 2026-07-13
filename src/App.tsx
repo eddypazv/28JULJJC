@@ -185,35 +185,34 @@ export default function App() {
           </div>
         </div>
 
-        {/* Inner App Container (Scrollable) */}
-        <div className="flex-1 flex flex-col pt-0 md:pt-6 overflow-y-auto pb-4">
-          
-          {/* Header Bar */}
-          <header className="bg-blue-900 text-white px-5 py-4 border-b border-blue-950 flex items-center justify-between shadow-md shrink-0">
-            <div className="flex items-center gap-2">
-              <div className="bg-red-600 px-2 py-0.5 rounded text-[10px] font-black tracking-wider uppercase">
-                PE
-              </div>
-              <div>
-                <h1 className="font-display font-black tracking-tight text-sm uppercase">
-                  Grupo JJC
-                </h1>
-                <p className="text-[10px] text-blue-200 uppercase tracking-widest font-mono">
-                  Fiestas Patrias 🇵🇪
-                </p>
-              </div>
+        {/* Header Bar - Static at the top of the device */}
+        <header className="bg-blue-900 text-white px-5 py-4 border-b border-blue-950 flex items-center justify-between shadow-md shrink-0 md:mt-6">
+          <div className="flex items-center gap-2">
+            <div className="bg-red-600 px-2 py-0.5 rounded text-[10px] font-black tracking-wider uppercase">
+              PE
             </div>
+            <div>
+              <h1 className="font-display font-black tracking-tight text-sm uppercase">
+                Grupo JJC
+              </h1>
+              <p className="text-[10px] text-blue-200 uppercase tracking-widest font-mono">
+                Fiestas Patrias 🇵🇪
+              </p>
+            </div>
+          </div>
 
-            {user && (
-              <div className="flex items-center gap-1 bg-blue-800/60 px-2.5 py-1 rounded-full border border-blue-700/50">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></div>
-                <span className="text-[10px] font-bold font-mono uppercase tracking-wider text-emerald-300">
-                  Activo
-                </span>
-              </div>
-            )}
-          </header>
+          {user && (
+            <div className="flex items-center gap-1 bg-blue-800/60 px-2.5 py-1 rounded-full border border-blue-700/50">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></div>
+              <span className="text-[10px] font-bold font-mono uppercase tracking-wider text-emerald-300">
+                Activo
+              </span>
+            </div>
+          )}
+        </header>
 
+        {/* Scrollable Main Content Area below the header */}
+        <div className="flex-1 flex flex-col overflow-y-auto pb-4" id="app-scroll-container">
           {/* Active Screen Selection */}
           <main className="flex-1 flex flex-col justify-center" id="main-screens-viewport">
             <AnimatePresence mode="wait">
