@@ -74,15 +74,9 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
       </div>
 
       <div className="bg-white rounded-b-2xl shadow-xl border border-slate-100 p-6 sm:p-8">
-        {/* Corporate Logo / Header */}
+        {/* Corporate Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center bg-blue-50 text-blue-800 font-display font-black text-2xl px-4 py-2 rounded-lg tracking-wider mb-2 border border-blue-100">
-            JJC
-          </div>
-          <p className="text-xs font-mono tracking-widest text-slate-400 uppercase">
-            CONTRATISTAS GENERALES S.A.
-          </p>
-          <h2 className="text-2xl font-display font-bold text-slate-800 mt-4 tracking-tight">
+          <h2 className="text-2xl font-display font-bold text-slate-800 tracking-tight">
             Fiestas Patrias JJC
           </h2>
           <p className="text-sm text-slate-500 mt-1">
@@ -206,7 +200,7 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
         {/* Footer Notes */}
         <div className="mt-8 pt-6 border-t border-slate-100 text-center">
           <p className="text-[11px] text-slate-400 leading-relaxed">
-            Completa las 6 estaciones escaneando los códigos QR correspondientes para participar del gran sorteo de Fiestas Patrias.
+            Completa las 4 estaciones escaneando los códigos QR correspondientes para participar del gran sorteo de Fiestas Patrias.
           </p>
         </div>
       </div>
