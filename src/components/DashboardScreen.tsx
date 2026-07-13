@@ -29,7 +29,7 @@ export default function DashboardScreen({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="w-full max-w-md px-4 py-4 mx-auto space-y-4"
+      className="w-full max-w-md px-6 sm:px-8 py-4 mx-auto space-y-4"
       id="dashboard-screen-container"
     >
       {/* Header Profile Info */}

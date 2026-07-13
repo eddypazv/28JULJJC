@@ -63,7 +63,7 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.4 }}
-      className="w-full max-w-md px-4 py-8 mx-auto"
+      className="w-full max-w-md px-6 sm:px-8 py-8 mx-auto"
       id="login-screen-container"
     >
       {/* Peruvian Ribbon Accent */}
