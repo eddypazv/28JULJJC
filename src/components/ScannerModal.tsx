@@ -217,21 +217,13 @@ export default function ScannerModal({ station, onClose, onScanSuccess }: Scanne
           <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 space-y-3">
             <div className="flex items-center justify-between text-slate-700 border-b border-slate-200/60 pb-2">
               <span className="text-xs font-bold uppercase tracking-wider">Validación por Código</span>
-              <button
-                type="button"
-                onClick={handleSimulate}
-                className="text-[10px] bg-amber-100 hover:bg-amber-200 text-amber-800 font-bold px-2.5 py-1 rounded-md transition-colors cursor-pointer"
-                id="simulate-scan-btn"
-              >
-                Auto-completar
-              </button>
             </div>
 
             {/* Manual Input Form */}
             <form onSubmit={handleManualSubmit} className="flex gap-2" id="manual-scan-form">
               <input
                 type="text"
-                placeholder={`Escribe o simula "${expectedQR}"`}
+                placeholder={`Escribe el código de la Estación ${station.id}`}
                 value={manualCode}
                 onChange={(e) => {
                   setManualCode(e.target.value);

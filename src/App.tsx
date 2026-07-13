@@ -44,7 +44,15 @@ export default function App() {
         setUser(JSON.parse(storedUser));
       }
       if (storedStations) {
-        setStations(JSON.parse(storedStations));
+        const parsed = JSON.parse(storedStations);
+        if (Array.isArray(parsed) && parsed.length === INITIAL_STATIONS.length) {
+          setStations(parsed);
+        } else {
+          setStations(INITIAL_STATIONS);
+          localStorage.setItem('jjc_stations', JSON.stringify(INITIAL_STATIONS));
+        }
+      } else {
+        setStations(INITIAL_STATIONS);
       }
       if (storedEmailJS) {
         setEmailJSConfig(JSON.parse(storedEmailJS));
@@ -188,7 +196,7 @@ export default function App() {
               </div>
               <div>
                 <h1 className="font-display font-black tracking-tight text-sm uppercase">
-                  JJC Contratistas
+                  Grupo JJC
                 </h1>
                 <p className="text-[10px] text-blue-200 uppercase tracking-widest font-mono">
                   Fiestas Patrias 🇵🇪
