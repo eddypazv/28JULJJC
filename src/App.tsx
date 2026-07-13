@@ -28,9 +28,9 @@ export default function App() {
 
   // EmailJS state
   const [emailJSConfig, setEmailJSConfig] = useState<EmailJSConfig>({
-    serviceId: 'YOUR_SERVICE_ID', // Replace with EmailJS Service ID
-    templateId: 'YOUR_TEMPLATE_ID', // Replace with EmailJS Template ID
-    publicKey: 'YOUR_PUBLIC_KEY', // Replace with EmailJS Public Key
+    serviceId: 'service_9h0njy4', // Replace with EmailJS Service ID
+    templateId: 'template_9f1i8e4', // Replace with EmailJS Template ID
+    publicKey: 'rtYLv9rifxkw3vMcF', // Replace with EmailJS Public Key
   });
 
   // State initialization from localStorage
