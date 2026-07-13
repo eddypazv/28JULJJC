@@ -38,7 +38,7 @@ export default function ScannerModal({ station, onClose, onScanSuccess }: Scanne
           {
             fps: 10,
             qrbox: (width, height) => {
-              const size = Math.min(width, height) * 0.7;
+              const size = Math.min(width, height) * 0.85;
               return { width: size, height: size };
             },
           },
@@ -162,7 +162,7 @@ export default function ScannerModal({ station, onClose, onScanSuccess }: Scanne
           </div>
 
           {/* Camera Viewport Area */}
-          <div className="relative aspect-square w-full max-w-[280px] mx-auto bg-slate-950 rounded-2xl overflow-hidden border-2 border-slate-200 shadow-inner flex flex-col items-center justify-center">
+          <div className="relative aspect-square w-full max-w-[340px] mx-auto bg-slate-950 rounded-2xl overflow-hidden border-2 border-slate-200 shadow-inner flex flex-col items-center justify-center">
             {/* The actual HTML5 QR container */}
             <div id={containerId} className="w-full h-full object-cover"></div>
 
@@ -181,15 +181,15 @@ export default function ScannerModal({ station, onClose, onScanSuccess }: Scanne
                 </span>
                 <p className="text-xs text-slate-300 font-medium">Lector en espera</p>
                 <p className="text-[10px] text-slate-400 leading-normal mt-1">
-                  Cámara no disponible en este entorno. Por favor, utiliza el panel de simulación manual inferior.
+                  Cámara no disponible en este entorno. Por favor, utiliza el panel de validación por código de abajo.
                 </p>
               </div>
             )}
 
             {/* Scanner Target Frame */}
             {isScannerInitialized && !cameraError && (
-              <div className="absolute inset-0 border-[24px] border-slate-950/40 pointer-events-none flex items-center justify-center">
-                <div className="w-48 h-48 border-2 border-blue-500 rounded-lg relative">
+              <div className="absolute inset-0 border-[12px] border-slate-950/40 pointer-events-none flex items-center justify-center">
+                <div className="w-64 h-64 border-2 border-blue-500 rounded-lg relative">
                   <div className="absolute top-0 left-0 w-4 h-4 border-t-4 border-l-4 border-blue-500 -mt-1 -ml-1"></div>
                   <div className="absolute top-0 right-0 w-4 h-4 border-t-4 border-r-4 border-blue-500 -mt-1 -mr-1"></div>
                   <div className="absolute bottom-0 left-0 w-4 h-4 border-b-4 border-l-4 border-blue-500 -mb-1 -ml-1"></div>
@@ -213,50 +213,35 @@ export default function ScannerModal({ station, onClose, onScanSuccess }: Scanne
             </motion.div>
           )}
 
-          {/* Developer Testing / Simulation Panel */}
-          <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 space-y-3.5">
-            <div className="flex items-center gap-1.5 text-slate-700 border-b border-slate-200/60 pb-2">
-              <Sparkles size={14} className="text-amber-500" />
-              <span className="text-xs font-bold uppercase tracking-wider">Mesa de Pruebas / Simulación</span>
-            </div>
-
-            <p className="text-[11px] text-slate-500 leading-relaxed">
-              ¿Estás en el visor o no tienes un QR físico? Pulsa el botón de abajo para simular que escaneaste el código <code className="bg-slate-200 text-slate-800 px-1 py-0.5 rounded font-mono text-[10px]">{expectedQR}</code>.
-            </p>
-
-            {/* Quick Simulation Button */}
-            <button
-              onClick={handleSimulate}
-              type="button"
-              className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2.5 px-4 rounded-xl text-xs shadow-md shadow-amber-500/10 hover:shadow-amber-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-              id="simulate-scan-btn"
-            >
-              <Check size={14} />
-              Simular Código: {expectedQR}
-            </button>
-
-            {/* Manual entry separator */}
-            <div className="flex items-center text-slate-400 gap-2 py-1 text-[10px] font-semibold uppercase justify-center">
-              <span className="h-px bg-slate-200 flex-1"></span>
-              <span>O ESCRIBE EL CÓDIGO</span>
-              <span className="h-px bg-slate-200 flex-1"></span>
+          {/* Validación por Código */}
+          <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 space-y-3">
+            <div className="flex items-center justify-between text-slate-700 border-b border-slate-200/60 pb-2">
+              <span className="text-xs font-bold uppercase tracking-wider">Validación por Código</span>
+              <button
+                type="button"
+                onClick={handleSimulate}
+                className="text-[10px] bg-amber-100 hover:bg-amber-200 text-amber-800 font-bold px-2.5 py-1 rounded-md transition-colors cursor-pointer"
+                id="simulate-scan-btn"
+              >
+                Auto-completar
+              </button>
             </div>
 
             {/* Manual Input Form */}
             <form onSubmit={handleManualSubmit} className="flex gap-2" id="manual-scan-form">
               <input
                 type="text"
-                placeholder={`Escribe "${expectedQR}"`}
+                placeholder={`Escribe o simula "${expectedQR}"`}
                 value={manualCode}
                 onChange={(e) => {
                   setManualCode(e.target.value);
                   if (manualError) setManualError(null);
                 }}
-                className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-50/50"
+                className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-50/50"
               />
               <button
                 type="submit"
-                className="bg-blue-900 hover:bg-blue-950 text-white px-4 py-2 rounded-xl text-xs font-semibold cursor-pointer"
+                className="bg-blue-900 hover:bg-blue-950 text-white px-4 py-2.5 rounded-xl text-xs font-semibold cursor-pointer"
               >
                 Validar
               </button>

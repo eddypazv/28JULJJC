@@ -1,6 +1,6 @@
-import React, { useState, FormEvent } from 'react';
+import React from 'react';
 import { Station, User } from '../types';
-import { Check, QrCode, LogOut, Lock, ArrowRight, Settings, Sparkles, Sliders } from 'lucide-react';
+import { Check, QrCode, LogOut, Lock, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface DashboardScreenProps {
@@ -10,12 +10,6 @@ interface DashboardScreenProps {
   onSubmitRaffle: () => void;
   onLogout: () => void;
   isSendingEmail: boolean;
-  emailJSConfig: {
-    serviceId: string;
-    templateId: string;
-    publicKey: string;
-  };
-  onUpdateEmailJSConfig: (newConfig: { serviceId: string; templateId: string; publicKey: string }) => void;
   key?: string;
 }
 
@@ -26,25 +20,9 @@ export default function DashboardScreen({
   onSubmitRaffle,
   onLogout,
   isSendingEmail,
-  emailJSConfig,
-  onUpdateEmailJSConfig,
 }: DashboardScreenProps) {
   const completedCount = stations.filter((s) => s.completed).length;
-  const isFullyCompleted = completedCount === 6;
-
-  // Real-time EmailJS configs edit state
-  const [showSettings, setShowSettings] = useState(false);
-  const [serviceId, setServiceId] = useState(emailJSConfig.serviceId);
-  const [templateId, setTemplateId] = useState(emailJSConfig.templateId);
-  const [publicKey, setPublicKey] = useState(emailJSConfig.publicKey);
-  const [saveSuccess, setSaveSuccess] = useState(false);
-
-  const handleSaveSettings = (e: FormEvent) => {
-    e.preventDefault();
-    onUpdateEmailJSConfig({ serviceId, templateId, publicKey });
-    setSaveSuccess(true);
-    setTimeout(() => setSaveSuccess(false), 2000);
-  };
+  const isFullyCompleted = completedCount === stations.length;
 
   return (
     <motion.div
@@ -83,11 +61,11 @@ export default function DashboardScreen({
         <div className="flex justify-between items-start">
           <div>
             <h4 className="font-display font-black text-xl tracking-tight">Tu Recorrido</h4>
-            <p className="text-xs text-blue-200 mt-1">Completa las 6 estaciones</p>
+            <p className="text-xs text-blue-200 mt-1">Completa las {stations.length} estaciones</p>
           </div>
           <div className="text-right">
             <span className="font-mono text-3xl font-black">{completedCount}</span>
-            <span className="font-mono text-blue-300 text-sm">/6</span>
+            <span className="font-mono text-blue-300 text-sm">/{stations.length}</span>
           </div>
         </div>
 
@@ -96,14 +74,14 @@ export default function DashboardScreen({
           <div className="w-full bg-blue-950/80 rounded-full h-2.5 overflow-hidden p-0.5 border border-blue-800/40">
             <motion.div
               initial={{ width: 0 }}
-              animate={{ width: `${(completedCount / 6) * 100}%` }}
+              animate={{ width: `${(completedCount / stations.length) * 100}%` }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
               className="bg-gradient-to-r from-blue-400 to-sky-400 h-full rounded-full"
             />
           </div>
           <div className="flex justify-between text-[10px] text-blue-200 font-medium">
             <span>Inicio</span>
-            <span>{Math.round((completedCount / 6) * 100)}% Completado</span>
+            <span>{Math.round((completedCount / stations.length) * 100)}% Completado</span>
             <span>Sorteo 🎁</span>
           </div>
         </div>
@@ -201,7 +179,7 @@ export default function DashboardScreen({
           <div
             className="w-full bg-slate-200 text-slate-400 font-semibold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 text-sm cursor-not-allowed border border-slate-300/40"
             id="enter-raffle-disabled"
-            title="Completa las 6 estaciones para habilitar esta opción"
+            title={`Completa las ${stations.length} estaciones para habilitar esta opción`}
           >
             <Lock size={16} />
             Ingresar al Sorteo
@@ -209,89 +187,11 @@ export default function DashboardScreen({
         )}
         <p className="text-[10px] text-center text-slate-400 mt-2.5">
           {!isFullyCompleted
-            ? 'Debes registrar la visita a las 6 estaciones con tu cámara para poder habilitar el sorteo.'
+            ? `Debes registrar la visita a las ${stations.length} estaciones con tu cámara para poder habilitar el sorteo.`
             : '¡Estaciones completadas! Haz clic para registrar tus datos en el sorteo.'}
         </p>
       </div>
 
-      {/* Developer Tool: EmailJS Credentials Settings */}
-      <div className="bg-slate-100 border border-slate-200/60 rounded-2xl p-4 space-y-3 shadow-inner">
-        <button
-          onClick={() => setShowSettings(!showSettings)}
-          className="w-full flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider cursor-pointer"
-          id="toggle-settings-btn"
-        >
-          <span className="flex items-center gap-1.5">
-            <Sliders size={14} className="text-blue-800" />
-            Configuración de EmailJS (Opcional)
-          </span>
-          <Settings size={14} className={`transform transition-transform ${showSettings ? 'rotate-90' : ''}`} />
-        </button>
-
-        {showSettings && (
-          <motion.form
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            onSubmit={handleSaveSettings}
-            className="space-y-3 pt-2 text-xs text-slate-600 border-t border-slate-200/50"
-            id="settings-form"
-          >
-            <p className="text-[11px] text-slate-400 leading-normal">
-              Reemplaza las llaves de EmailJS aquí mismo para probar envíos reales con tu propia cuenta sin editar archivos de código:
-            </p>
-
-            <div className="space-y-1">
-              <label className="font-semibold block">Service ID</label>
-              <input
-                type="text"
-                value={serviceId}
-                onChange={(e) => setServiceId(e.target.value)}
-                placeholder="default_service"
-                className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 font-mono text-[11px]"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label className="font-semibold block">Template ID</label>
-              <input
-                type="text"
-                value={templateId}
-                onChange={(e) => setTemplateId(e.target.value)}
-                placeholder="template_xxxxx"
-                className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 font-mono text-[11px]"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label className="font-semibold block">Public Key (User ID)</label>
-              <input
-                type="text"
-                value={publicKey}
-                onChange={(e) => setPublicKey(e.target.value)}
-                placeholder="user_xxxxxxx"
-                className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 font-mono text-[11px]"
-              />
-            </div>
-
-            <div className="flex justify-between items-center pt-1.5">
-              {saveSuccess ? (
-                <span className="text-emerald-600 font-semibold text-[11px] flex items-center gap-1">
-                  <Check size={12} />
-                  ¡Guardado!
-                </span>
-              ) : (
-                <span></span>
-              )}
-              <button
-                type="submit"
-                className="bg-blue-900 hover:bg-blue-950 text-white font-semibold px-3 py-1.5 rounded-lg text-xs cursor-pointer"
-              >
-                Guardar Cambios
-              </button>
-            </div>
-          </motion.form>
-        )}
-      </div>
     </motion.div>
   );
 }

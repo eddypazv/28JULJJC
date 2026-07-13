@@ -9,7 +9,7 @@ import emailjs from '@emailjs/browser';
 import { Sparkles, HelpCircle, Check, Award, Mail, ExternalLink } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
-const INITIAL_STATIONS: Station[] = Array.from({ length: 6 }).map((_, i) => ({
+const INITIAL_STATIONS: Station[] = Array.from({ length: 4 }).map((_, i) => ({
   id: i + 1,
   name: `Estación ${i + 1}`,
   completed: false,
@@ -103,7 +103,7 @@ export default function App() {
       user_email: user.email,
       to_email: 'eddy.paz@jjc.com.pe',
       subject: `Participante del Sorteo Fiestas Patrias JJC: ${user.nombres}`,
-      message: `El colaborador ${user.nombres} con DNI N° ${user.dni} y correo ${user.email} ha completado exitosamente las 6 estaciones de la Cartilla Fiestas Patrias JJC 2026.`,
+      message: `El colaborador ${user.nombres} con DNI N° ${user.dni} y correo ${user.email} ha completado exitosamente las 4 estaciones de la Cartilla Fiestas Patrias JJC 2026.`,
     };
 
     if (isUsingPlaceholders) {
@@ -220,8 +220,6 @@ export default function App() {
                   onSubmitRaffle={handleSendRaffleEmail}
                   onLogout={handleLogout}
                   isSendingEmail={isSendingEmail}
-                  emailJSConfig={emailJSConfig}
-                  onUpdateEmailJSConfig={handleUpdateEmailJSConfig}
                 />
               )}
             </AnimatePresence>

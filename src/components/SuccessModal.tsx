@@ -56,7 +56,7 @@ export default function SuccessModal({ user, isMock, emailJSConfig, onRestart }:
         <div className="p-6 sm:p-8 space-y-6">
           <div className="text-center space-y-2">
             <p className="text-sm text-slate-600 leading-relaxed">
-              Felicitaciones, <strong className="font-semibold text-slate-900">{user.nombres}</strong>. Has completado exitosamente las 6 estaciones de la cartilla.
+              Felicitaciones, <strong className="font-semibold text-slate-900">{user.nombres}</strong>. Has completado exitosamente las 4 estaciones de la cartilla.
             </p>
             <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 px-3 py-1.5 rounded-full text-xs font-semibold border border-green-100 mt-2">
               <CheckCircle2 size={14} />
