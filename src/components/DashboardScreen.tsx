@@ -130,7 +130,7 @@ export default function DashboardScreen({
               {/* Card Body Information */}
               <div className="mt-2">
                 <h5 className="font-display font-bold text-xs sm:text-sm tracking-tight leading-none">
-                  Estación {station.id}
+                  Estación {station.name}
                 </h5>
                 <p
                   className={`text-[9px] mt-1 font-medium leading-none ${

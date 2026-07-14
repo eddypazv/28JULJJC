@@ -21,7 +21,7 @@ export default function ScannerModal({ station, onClose, onScanSuccess }: Scanne
   const containerId = 'qr-reader-container';
 
   // Format expected QR content
-  const expectedQR = `ESTACION-${station.id}`;
+  const expectedQR = station.name;
 
   useEffect(() => {
     // Initialize html5-qrcode
@@ -82,10 +82,12 @@ export default function ScannerModal({ station, onClose, onScanSuccess }: Scanne
     const cleanScanned = text.trim().toUpperCase().replace(/\s/g, '');
     const cleanExpected = expectedQR.toUpperCase().replace(/\s/g, '');
     const cleanExpectedAlt = `ESTACION${station.id}`; // Alternative "ESTACION1"
+    const cleanExpectedLegacy = `ESTACION-${station.id}`; // Alternative "ESTACION-1"
 
     if (
       cleanScanned === cleanExpected ||
       cleanScanned === cleanExpectedAlt ||
+      cleanScanned === cleanExpectedLegacy ||
       cleanScanned === String(station.id)
     ) {
       // Correct scan!
@@ -98,7 +100,7 @@ export default function ScannerModal({ station, onClose, onScanSuccess }: Scanne
       }
     } else {
       setManualError(
-        `Código incorrecto. Escaneaste "${text}". Debes escanear el código QR correspondiente a la Estación ${station.id} (${expectedQR}).`
+        `Código incorrecto. Escaneaste "${text}". Debes escanear el código QR correspondiente a la Estación ${station.name} (${expectedQR}).`
       );
     }
   };
@@ -136,7 +138,7 @@ export default function ScannerModal({ station, onClose, onScanSuccess }: Scanne
               {station.id}
             </div>
             <div>
-              <h3 className="font-display font-bold leading-tight">Escaneando Estación {station.id}</h3>
+              <h3 className="font-display font-bold leading-tight">Escaneando Estación {station.name}</h3>
               <p className="text-[10px] text-blue-200 uppercase tracking-widest font-mono">Validación de Visita</p>
             </div>
           </div>
@@ -157,7 +159,7 @@ export default function ScannerModal({ station, onClose, onScanSuccess }: Scanne
               <Info size={16} />
             </span>
             <p className="text-xs text-blue-800 leading-relaxed">
-              Encuentra el cartel de la <strong className="font-semibold text-blue-950">Estación {station.id}</strong> en el evento y escanea su código QR correspondiente.
+              Encuentra el cartel de la <strong className="font-semibold text-blue-950">Estación {station.name}</strong> en el evento y escanea su código QR correspondiente.
             </p>
           </div>
 
@@ -223,7 +225,7 @@ export default function ScannerModal({ station, onClose, onScanSuccess }: Scanne
             <form onSubmit={handleManualSubmit} className="flex gap-2" id="manual-scan-form">
               <input
                 type="text"
-                placeholder={`Escribe el código de la Estación ${station.id}`}
+                placeholder={`Escribe el código de la Estación ${station.name}`}
                 value={manualCode}
                 onChange={(e) => {
                   setManualCode(e.target.value);

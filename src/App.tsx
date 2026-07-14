@@ -9,9 +9,11 @@ import emailjs from '@emailjs/browser';
 import { Sparkles, HelpCircle, Check, Award, Mail, ExternalLink } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
-const INITIAL_STATIONS: Station[] = Array.from({ length: 4 }).map((_, i) => ({
+const STATION_NAMES = ['Norte', 'Centro', 'Lima', 'Sur'];
+
+const INITIAL_STATIONS: Station[] = STATION_NAMES.map((name, i) => ({
   id: i + 1,
-  name: `Estación ${i + 1}`,
+  name: name,
   completed: false,
   completedAt: null,
 }));
@@ -46,7 +48,12 @@ export default function App() {
       if (storedStations) {
         const parsed = JSON.parse(storedStations);
         if (Array.isArray(parsed) && parsed.length === INITIAL_STATIONS.length) {
-          setStations(parsed);
+          const migrated = parsed.map((station, idx) => ({
+            ...station,
+            name: INITIAL_STATIONS[idx].name,
+          }));
+          setStations(migrated);
+          localStorage.setItem('jjc_stations', JSON.stringify(migrated));
         } else {
           setStations(INITIAL_STATIONS);
           localStorage.setItem('jjc_stations', JSON.stringify(INITIAL_STATIONS));
